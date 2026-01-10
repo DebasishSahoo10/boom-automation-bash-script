@@ -17,6 +17,10 @@ PIP_PACKAGES=(
 # =========================
 NODES=(
     #"https://github.com/ltdrdata/ComfyUI-Manager"
+    "https://github.com/Kijai/ComfyUI-WanVideoWrapper.git"
+    "https://github.com/Kijai/ComfyUI-KJNodes.git"
+    "https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git"
+    "https://github.com/Kijai/ComfyUI-MelBandRoFormer.git"
 )
 
 WORKFLOWS=(
@@ -70,6 +74,25 @@ CONTROLNET_MODELS=(
 # PROVISIONING LOGIC
 # =========================
 
+function restart_comfyui() {
+    echo "🔄 Restarting ComfyUI..."
+
+    # Kill existing ComfyUI process if running
+    pkill -f "python.*main.py" || true
+
+    # Small delay to release GPU / ports
+    sleep 3
+
+    # Start ComfyUI again (background)
+    nohup python "${COMFYUI_DIR}/main.py" \
+        --listen 0.0.0.0 \
+        --port 8188 \
+        > "${WORKSPACE}/comfyui.log" 2>&1 &
+
+    echo "✅ ComfyUI restarted"
+}
+
+
 function provisioning_start() {
     provisioning_print_header
     provisioning_get_apt_packages
@@ -88,6 +111,8 @@ function provisioning_start() {
     provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
 
     provisioning_print_end
+
+    restart_comfyui
 }
 
 function provisioning_get_apt_packages() {
