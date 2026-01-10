@@ -105,12 +105,9 @@ function fetch_vastainode_assets() {
     echo "⬇️  Fetching assets from private repo: vastainode"
 
     # Clone or update temp repo
-    if [[ -d "$TMP_DIR/.git" ]]; then
-        git -C "$TMP_DIR" pull
-    else
-        rm -rf "$TMP_DIR"
-        git clone "https://${GITHUB_TOKEN}@${REPO}" "$TMP_DIR"
-    fi
+    git clone --depth=1 \
+        "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}" \
+        "$TMP_DIR"
 
     # ===== Fonts (keep subfolder) =====
     echo "📁 Copying Fonts/"
@@ -142,6 +139,8 @@ function provisioning_start() {
     provisioning_get_nodes
     provisioning_get_pip_packages
 
+    fetch_vastainode_assets
+
     provisioning_get_files "$COMFYUI_DIR/models/checkpoints" "${CHECKPOINT_MODELS[@]}"
     provisioning_get_files "$COMFYUI_DIR/models/unet" "${UNET_MODELS[@]}"
     provisioning_get_files "$COMFYUI_DIR/models/diffusion_models" "${DIFFUSION_MODELS[@]}"
@@ -152,8 +151,6 @@ function provisioning_start() {
     provisioning_get_files "$COMFYUI_DIR/models/clip_vision" "${CLIP_VISION_MODELS[@]}"
     provisioning_get_files "$COMFYUI_DIR/models/audio_encoders" "${AUDIO_ENCODER_MODELS[@]}"
     provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
-
-    fetch_vastainode_assets
 
     provisioning_print_end
 
