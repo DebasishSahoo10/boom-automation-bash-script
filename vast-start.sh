@@ -141,16 +141,16 @@ function provisioning_start() {
 
     fetch_vastainode_assets
 
-    provisioning_get_files "$COMFYUI_DIR/models/checkpoints" "${CHECKPOINT_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/unet" "${UNET_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/diffusion_models" "${DIFFUSION_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/vae" "${VAE_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/text_encoders" "${TEXT_ENCODER_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/loras" "${LORA_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/upscale_models" "${UPSCALE_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/clip_vision" "${CLIP_VISION_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/audio_encoders" "${AUDIO_ENCODER_MODELS[@]}"
-    provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/checkpoints" "${CHECKPOINT_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/unet" "${UNET_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/diffusion_models" "${DIFFUSION_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/vae" "${VAE_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/text_encoders" "${TEXT_ENCODER_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/loras" "${LORA_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/upscale_models" "${UPSCALE_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/clip_vision" "${CLIP_VISION_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/audio_encoders" "${AUDIO_ENCODER_MODELS[@]}"
+    # provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
 
     provisioning_print_end
 
