@@ -92,6 +92,49 @@ function restart_comfyui() {
     echo "✅ ComfyUI restarted"
 }
 
+function fetch_vastainode_assets() {
+    local REPO="github.com/denisbalon/vastainode.git"
+    local TMP_DIR="/tmp/vastainode"
+    local DEST="${WORKSPACE}"
+
+    if [[ -z "$GITHUB_TOKEN" ]]; then
+        echo "❌ GITHUB_TOKEN not set, cannot fetch private repo"
+        return 1
+    fi
+
+    echo "⬇️  Fetching assets from private repo: vastainode"
+
+    # Clone or update temp repo
+    if [[ -d "$TMP_DIR/.git" ]]; then
+        git -C "$TMP_DIR" pull
+    else
+        rm -rf "$TMP_DIR"
+        git clone "https://${GITHUB_TOKEN}@${REPO}" "$TMP_DIR"
+    fi
+
+    # ===== Fonts (keep subfolder) =====
+    echo "📁 Copying Fonts/"
+    mkdir -p "$DEST/Fonts"
+    rsync -a "$TMP_DIR/Fonts/" "$DEST/Fonts/"
+
+    # ===== Files copied directly into WORKSPACE =====
+    echo "📄 Copying scripts and config files to workspace root"
+
+    cp -f "$TMP_DIR/FFMPEG/add_captions.py" "$DEST/"
+    cp -f "$TMP_DIR/FFMPEG/trim_video.py" "$DEST/"
+
+    cp -f "$TMP_DIR/Creds/AWS_CREDENTIALS.json" "$DEST/"
+    cp -f "$TMP_DIR/Creds/OPENAI_API_KEY.json" "$DEST/"
+
+    cp -f "$TMP_DIR/Prompts/gpt_speech_text_prompt.txt" "$DEST/"
+
+    cp -f "$TMP_DIR/InfiniteTalk/InfiniteAPI.py" "$DEST/"
+
+    echo "✅ vastainode assets copied to workspace"
+}
+
+
+
 
 function provisioning_start() {
     provisioning_print_header
@@ -109,6 +152,8 @@ function provisioning_start() {
     provisioning_get_files "$COMFYUI_DIR/models/clip_vision" "${CLIP_VISION_MODELS[@]}"
     provisioning_get_files "$COMFYUI_DIR/models/audio_encoders" "${AUDIO_ENCODER_MODELS[@]}"
     provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
+
+    fetch_vastainode_assets
 
     provisioning_print_end
 
