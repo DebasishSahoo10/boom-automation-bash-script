@@ -93,7 +93,8 @@ function restart_comfyui() {
 }
 
 function fetch_vastainode_assets() {
-    local REPO="github.com/denisbalon/vastainode.git"
+    local OWNER="denisbalon"
+    local REPO="vastainode"
     local TMP_DIR="/tmp/vastainode"
     local DEST="${WORKSPACE}"
 
@@ -106,7 +107,7 @@ function fetch_vastainode_assets() {
 
     # Clone or update temp repo
     git clone --depth=1 \
-        "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPO}" \
+        "https://x-access-token:${GITHUB_TOKEN}@github.com/${OWNER}/${REPO}.git" \
         "$TMP_DIR"
 
     # ===== Fonts (keep subfolder) =====
