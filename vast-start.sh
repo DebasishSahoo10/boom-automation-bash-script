@@ -7,6 +7,7 @@ COMFYUI_DIR=${WORKSPACE}/ComfyUI
 # OPTIONAL PACKAGES
 # =========================
 APT_PACKAGES=(
+    ffmpeg
 )
 
 PIP_PACKAGES=(
@@ -140,31 +141,55 @@ function fetch_vastainode_assets() {
     echo "✅ vastainode assets copied to workspace"
 }
 
+function start_custom_apis() {
+    echo "🚀 Starting custom APIs..."
 
+    cd "${WORKSPACE}"
+
+    # ---- InfiniteAPI ----
+    if pgrep -f "python.*InfiniteAPI.py" > /dev/null; then
+        echo "✅ InfiniteAPI already running"
+    else
+        echo "▶ Starting InfiniteAPI..."
+        nohup python InfiniteAPI.py \
+            > "${WORKSPACE}/InfiniteAPI.log" 2>&1 &
+    fi
+
+    # ---- trim_video API / script ----
+    if pgrep -f "python.*trim_video.py" > /dev/null; then
+        echo "✅ trim_video already running"
+    else
+        echo "▶ Starting trim_video..."
+        nohup python trim_video.py \
+            > "${WORKSPACE}/trim_video.log" 2>&1 &
+    fi
+
+    echo "✅ Custom APIs started"
+}
 
 
 function provisioning_start() {
-    # provisioning_print_header
-    # provisioning_get_apt_packages
-    # provisioning_get_nodes
+    provisioning_print_header
+    provisioning_get_apt_packages
+    provisioning_get_nodes
     provisioning_get_pip_packages
 
-    fetch_vastainode_assets
+    provisioning_get_files "$COMFYUI_DIR/models/checkpoints" "${CHECKPOINT_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/unet" "${UNET_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/diffusion_models" "${DIFFUSION_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/vae" "${VAE_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/text_encoders" "${TEXT_ENCODER_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/loras" "${LORA_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/upscale_models" "${UPSCALE_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/clip_vision" "${CLIP_VISION_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/audio_encoders" "${AUDIO_ENCODER_MODELS[@]}"
+    provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
 
-    # provisioning_get_files "$COMFYUI_DIR/models/checkpoints" "${CHECKPOINT_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/unet" "${UNET_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/diffusion_models" "${DIFFUSION_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/vae" "${VAE_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/text_encoders" "${TEXT_ENCODER_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/loras" "${LORA_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/upscale_models" "${UPSCALE_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/clip_vision" "${CLIP_VISION_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/audio_encoders" "${AUDIO_ENCODER_MODELS[@]}"
-    # provisioning_get_files "$COMFYUI_DIR/models/controlnet" "${CONTROLNET_MODELS[@]}"
+    fetch_vastainode_assets
+    restart_comfyui
+    start_custom_apis
 
     provisioning_print_end
-
-    restart_comfyui
 }
 
 function provisioning_get_apt_packages() {
