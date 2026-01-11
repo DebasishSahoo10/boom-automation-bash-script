@@ -48,34 +48,34 @@ UNET_MODELS=(
 )
 
 DIFFUSION_MODELS=(
-    "https://drive.google.com/uc?export=download&id=1yg9Rd8TZkzUuqGSwpYZi8UyM9EZNcjAj"
-    "https://drive.google.com/uc?export=download&id=1nSpBoAmHdEWwvWv8Qxvl0YoJW-ZQeyWF"
-    "https://drive.google.com/uc?export=download&id=1hIENZyf7K4_StMIMyOXFm9kEsky5j3iW"
-    "https://drive.google.com/uc?export=download&id=1djMHfwCS0bXJ_bjWo0dA1gRVzq2Q6FIi"
+    "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/InfiniteTalk/Wan2_1-InfiniteTalk-Multi_fp8_e5m2_scaled_KJ.safetensors"
+    "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/InfiniteTalk/Wan2_1-InfiniteTalk-Single_fp8_e4m3fn_scaled_KJ.safetensors"
+    "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/I2V/Wan2_1-I2V-14B-480p_fp8_e5m2_scaled_KJ.safetensors"
+    "https://huggingface.co/Kijai/MelBandRoFormer_comfy/resolve/main/MelBandRoformer_fp32.safetensors"
 )
 
 VAE_MODELS=(
-    "https://drive.google.com/uc?export=download&id=1TeyTl9ewaX1LUTtqaJ2GKwsM_QJLf7Y3"
+    "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors"
 )
 
 TEXT_ENCODER_MODELS=(
-    "https://drive.google.com/uc?export=download&id=13znroe1uLutonQ68i8zUjKAgPsNoCLE2"
+    "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors"
 )
 
 LORA_MODELS=(
-    "https://drive.google.com/uc?export=download&id=1JmQT67Mt9TecM8r5BXe_s4Ld8tOm9HXd"
+    "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Lightx2v/lightx2v_I2V_14B_480p_cfg_step_distill_rank64_bf16.safetensors"
 )
 
 UPSCALE_MODELS=(
-    "https://drive.google.com/uc?export=download&id=1pnjBjCbfJ3ScR2Ug6fhDNd8TC49g1kSr"
+    "https://huggingface.co/lokCX/4x-Ultrasharp/resolve/main/4x-UltraSharp.pth"
 )
 
 CLIP_VISION_MODELS=(
-    "https://drive.google.com/uc?export=download&id=1HklWwZfb0oKzwHF4DBqG86Ssdtt5olzT"
+    "https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/clip_vision/clip_vision_h.safetensors"
 )
 
 AUDIO_ENCODER_MODELS=(
-    "https://drive.google.com/uc?export=download&id=15Z6kdfx0c99y1U4kZHjPCh534WNx_n4w"
+    "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/audio_encoders/wav2vec2_large_english_fp16.safetensors"
 )
 
 CONTROLNET_MODELS=(
