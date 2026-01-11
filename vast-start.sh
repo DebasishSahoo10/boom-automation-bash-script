@@ -170,9 +170,9 @@ function start_custom_apis() {
 
 function provisioning_start() {
     # provisioning_print_header
-    # provisioning_get_apt_packages
+    provisioning_get_apt_packages
     # provisioning_get_nodes
-    # provisioning_get_pip_packages
+    provisioning_get_pip_packages
 
     # provisioning_get_files "$COMFYUI_DIR/models/checkpoints" "${CHECKPOINT_MODELS[@]}"
     # provisioning_get_files "$COMFYUI_DIR/models/unet" "${UNET_MODELS[@]}"
