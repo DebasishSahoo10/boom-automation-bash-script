@@ -20,6 +20,7 @@ PIP_PACKAGES=(
     Pillow
     emoji==1.7.0
     openai
+    gdown
 )
 
 # =========================
@@ -237,11 +238,41 @@ function provisioning_get_files() {
 function provisioning_download() {
     local url="$1"
     local dir="$2"
-    local auth_token=""
+    local filename=""
 
-    if [[ -n $HF_TOKEN && $url =~ huggingface\.co ]]; then
+    mkdir -p "$dir"
+
+    # -------------------------------
+    # GOOGLE DRIVE
+    # -------------------------------
+    if [[ "$url" =~ drive\.google\.com ]]; then
+        echo "📥 Google Drive download detected"
+
+        # Extract file ID
+        if [[ "$url" =~ /d/([a-zA-Z0-9_-]+) ]]; then
+            file_id="${BASH_REMATCH[1]}"
+        elif [[ "$url" =~ id=([a-zA-Z0-9_-]+) ]]; then
+            file_id="${BASH_REMATCH[1]}"
+        else
+            echo "❌ Could not extract Google Drive file ID"
+            return 1
+        fi
+
+        echo "📄 File ID: $file_id"
+
+        # Download using gdown
+        gdown --id "$file_id" --quiet --fuzzy -O "$dir"
+
+        return 0
+    fi
+
+    # -------------------------------
+    # HUGGINGFACE / CIVITAI / NORMAL
+    # -------------------------------
+    local auth_token=""
+    if [[ -n $HF_TOKEN && "$url" =~ huggingface\.co ]]; then
         auth_token="$HF_TOKEN"
-    elif [[ -n $CIVITAI_TOKEN && $url =~ civitai\.com ]]; then
+    elif [[ -n $CIVITAI_TOKEN && "$url" =~ civitai\.com ]]; then
         auth_token="$CIVITAI_TOKEN"
     fi
 
@@ -254,6 +285,7 @@ function provisioning_download() {
             --show-progress -P "$dir" "$url"
     fi
 }
+
 
 function provisioning_print_header() {
     echo "=============================================="
