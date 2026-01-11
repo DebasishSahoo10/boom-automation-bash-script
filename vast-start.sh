@@ -10,6 +10,15 @@ APT_PACKAGES=(
 )
 
 PIP_PACKAGES=(
+    pydub
+    boto3
+    fastapi
+    uvicorn
+    requests
+    flask
+    Pillow
+    emoji==1.7.0
+    openai
 )
 
 # =========================
